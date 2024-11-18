@@ -2,7 +2,7 @@ Data Capture Chrome Extension
 Overview
 This Chrome extension is designed to extract data from specific web page rows, store it locally, and send the data to a Google Sheet. It simplifies data collection, management, and validation by integrating directly with web pages and Google Sheets.
 
-Features
+# **Features**
 Data Extraction: Captures data such as Case ID, Bill Number, Hospital Name, Claimed Amount, Bill Amount, NME Amount, Discount, and NME Percentage from web page rows.
 Local Storage: Stores captured data temporarily in the browser’s local storage for user review.
 Duplicate Check: Verifies data against existing Case IDs in Google Sheets to avoid duplication.
@@ -41,11 +41,14 @@ Open Google Apps Script.
 Create a new project and paste the following code:
 javascript
 Copy code
-function doPost(e) {
-    var sheet = SpreadsheetApp.openById('YOUR_SPREADSHEET_ID').getSheetByName('Sheet1');
-    var data = JSON.parse(e.postData.contents);
+
+     function doPost(e) {
     
-    sheet.appendRow([
+        var sheet = SpreadsheetApp.openById('YOUR_SPREADSHEET_ID').getSheetByName('Sheet1');
+    
+        var data = JSON.parse(e.postData.contents);
+    
+        sheet.appendRow([
         data.timestamp,
         data.caseId,
         data.billNumber,
@@ -57,10 +60,10 @@ function doPost(e) {
         data.discount,
         data.nmePercentage,
         data.timespent
-    ]);
+        ]);
     
-    return ContentService.createTextOutput(JSON.stringify({ 'result': 'success' })).setMimeType(ContentService.MimeType.JSON);
-}
+        return ContentService.createTextOutput(JSON.stringify({ 'result': 'success' })).setMimeType(ContentService.MimeType.JSON);
+    }
 
 Deploy the script as a Web App and copy the deployment URL.
 
